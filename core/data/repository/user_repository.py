@@ -58,13 +58,10 @@ class UserRepositoryTest(UserRepositoryAbstract):
             return copy(search[0])
         return None
     
-    def exists(self, user: User) -> bool:
-        return NotImplementedError()
-    
     
     
 class UserRepositorySqlalchemy(UserRepositoryAbstract):
-    def __init__(self, db: Session):
+    def __init__(self, db: Session): # pragma: no cover
         self.db: Session = db
         
     def get(self, username) -> User | None:
