@@ -13,6 +13,10 @@ class VerifyUserUseCase(UseCase):
         if user_from_repo and bcrypt.checkpw(user.password, user_from_repo.password):
             return True
         return False
+    
+class GetUserUseCase(UseCase):
+    def execute(self, username: str) -> User | None:
+        return self.repo.get(username)
 
         
         
