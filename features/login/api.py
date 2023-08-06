@@ -14,7 +14,12 @@ router = APIRouter()
 @login_manager.user_loader(db=next(get_db()))
 def get_user(username: str, db: Session):
         repo = UserRepositorySqlalchemy(db)
-        return GetUserUseCase(repo).execute(username)
+        user = GetUserUseCase(repo).execute(username)
+        if user is None:
+            raise InvalidCredentialsException
+        return user
+
+
 
 @router.post("/login")
 def login(data: OAuth2PasswordRequestForm=Depends(), db=Depends(get_db)):
