@@ -15,7 +15,7 @@ def repo():
                  f"user_{i}@mail.com",
                  f"password_{i}",
                  ) for i in range(10)]
-    return UserRepositoryTest(start_db)
+    yield UserRepositoryTest(start_db)
 
 
 

@@ -1,31 +1,28 @@
 from copy import copy, deepcopy
+
+from sqlalchemy import and_, delete, exists, select, or_
 from core.data import Repository
 from core.domain.model import User
 from abc import ABC, abstractmethod
-
+from sqlalchemy.orm import Session
 
 
 class UserRepositoryAbstract(Repository, ABC): # pragma: no cover
     def __init__(self, db):
         self.db = db
         
-    @abstractmethod
     def get(self, username) -> User | None:
         raise NotImplementedError()
     
-    @abstractmethod
     def add(self, user: User) -> User | None:
         raise NotImplementedError()
     
-    @abstractmethod
     def remove(self, user: User):
         raise NotImplementedError()
     
-    @abstractmethod
     def get_by_email(self, email) -> User | None:
         raise NotImplementedError()
     
-    @abstractmethod
     def exists(self, user: User) -> bool:
         raise NotImplementedError()
     
@@ -60,6 +57,55 @@ class UserRepositoryTest(UserRepositoryAbstract):
         if search:
             return copy(search[0])
         return None
+    
+    def exists(self, user: User) -> bool:
+        return NotImplementedError()
+    
+    
+    
+class UserRepositorySqlalchemy(UserRepositoryAbstract):
+    def __init__(self, db: Session):
+        self.db: Session = db
+        
+    def get(self, username) -> User | None:
+        result = self.db.execute(select(User).
+                                 where(User.username==username)
+                                 ).first()
+        if result:
+            result = result[0]
+        return result
+    
+    def add(self, user: User) -> User | None:
+        if user is None or self.db.query(exists().
+                           where(or_(User.username == user.username,
+                                     User.email == user.email))).scalar():
+            return None
+        self.db.add(user)
+        return user
+    
+    def remove(self, user: User) -> User | None:
+        if user is None or not self.db.query(exists().
+                           where(or_(User.username == user.username,
+                                     User.email == user.email))).scalar():
+            return None
+        
+        
+        self.db.execute(delete(User).where(and_(User.email==user.email,
+                                            User.username==user.username)))
+        return user
+    
+    def get_by_email(self, email) -> User | None:
+        result = self.db.execute(select(User).
+                                 where(User.email==email)
+                                 ).first()
+        if result:
+            result = result[0]
+        return result
+            
+            
+
+    
+        
 
     
     
