@@ -70,9 +70,7 @@ class UserRepositorySqlalchemy(UserRepositoryAbstract):
     def get(self, username) -> User | None:
         result = self.db.execute(select(User).
                                  where(User.username==username)
-                                 ).first()
-        if result:
-            result = result[0]
+                                 ).scalar_one_or_none()
         return result
     
     def add(self, user: User) -> User | None:
