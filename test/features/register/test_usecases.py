@@ -1,5 +1,5 @@
 import pytest
-from core.data.repository import UserRepositoryTest
+from core.data.repository.user_repository import UserRepositoryTest
 from core.application import security
 from core.domain.model import User
 from features.register.domain.usecases import (RegisterUserUseCase)

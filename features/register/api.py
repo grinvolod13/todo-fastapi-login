@@ -5,7 +5,7 @@ from .domain.usecases import RegisterUserUseCase
 import core.data.dependency as dependency
 from core.application.security import login_manager
 
-from core.data.repository import UserRepositorySqlalchemy
+from core.data.repository.user_repository import UserRepositorySqlalchemy
 
 
 router = APIRouter()

@@ -1,4 +1,4 @@
-from core.data.repository import UserRepositoryTest
+from core.data.repository.user_repository import UserRepositoryTest
 from core.domain.model import User
 import pytest
 from copy import deepcopy

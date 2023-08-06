@@ -3,7 +3,7 @@ from fastapi_login.exceptions import InvalidCredentialsException
 from fastapi.security import OAuth2PasswordRequestForm
 from core.data.dependency import get_db
 from features.login.domain.usecases import GetUserUseCase
-from core.data.repository import UserRepositorySqlalchemy 
+from core.data.repository.user_repository import UserRepositorySqlalchemy 
 from sqlalchemy.orm.session import Session
 
 from core.application.security import login_manager, check_password_hash

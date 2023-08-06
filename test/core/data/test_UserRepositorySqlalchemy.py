@@ -1,4 +1,4 @@
-from core.data.repository import UserRepositorySqlalchemy
+from core.data.repository.user_repository import UserRepositorySqlalchemy
 from core.domain.model import User
 import pytest
 from sqlalchemy.orm import Session
