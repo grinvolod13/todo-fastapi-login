@@ -11,8 +11,6 @@ class RegisterUserUseCase(UseCase):
         
     def execute(self, user: User) -> bool:
         # TODO : set normal password checks and tests
-        if user == None or user.password == None or user.username == None or user.email == None:
-            return False
         if (self.repo.get(user.username)!=None) or (self.repo.get_by_email(user.email)!=None):
             return False # if exists
         self.repo.add(user)
