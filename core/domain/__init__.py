@@ -1,7 +1,7 @@
 from abc import ABC
 from core.data import Repository
 
-class UseCase(ABC):
+class UseCase(ABC): # pragma: no cover
     def __init__(self, repo: Repository):
         self.repo = repo
 

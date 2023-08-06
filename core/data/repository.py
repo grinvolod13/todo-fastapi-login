@@ -5,7 +5,7 @@ from abc import ABC
 
 
 
-class UserRepositoryAbstract(Repository, ABC):
+class UserRepositoryAbstract(Repository, ABC): # pragma: no cover
     def __init__(self, db):
         self.db = db
         
@@ -19,6 +19,9 @@ class UserRepositoryAbstract(Repository, ABC):
         raise NotImplementedError()
     
     def get_by_email(self, email) -> User | None:
+        raise NotImplementedError()
+    
+    def exists(self, user: User) -> bool:
         raise NotImplementedError()
     
     

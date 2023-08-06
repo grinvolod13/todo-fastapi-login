@@ -15,5 +15,5 @@ user = Table(
     Column('password', String(60), nullable=False),
 )
 
-def start_mappers():
+def start_mappers(): # TODO: add tests
     user_mapper = mapper_registry.map_imperatively(model.User, user)

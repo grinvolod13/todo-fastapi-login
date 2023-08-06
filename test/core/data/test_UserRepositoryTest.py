@@ -60,4 +60,27 @@ def test_remove_success():
     user_rm = repo.get("User_0")
     assert user_rm == None
     
+def test_remove_fail():
+    repo = UserRepositoryTest(deepcopy(start_db))
+    user = User("User_10", "", "")
+    out = repo.remove(user)
+    assert len(repo.db) == len(start_db)
+    assert out == None
+    
+# def test_exists_success():
+#     repo = UserRepositoryTest(deepcopy(start_db))
+#     user_1 = User("User_0", "OTHER MAIL", "password_0")
+#     user_2 = User("OTHER NAME", "user_0@mail.com", "password_0")
+#     assert repo.exists(user_1) == True
+#     assert repo.exists(user_2) == True
+#     assert len([u for u in start_db if (user.email == u.email) or (user.username == u.username)]) != 0
+    
+# def test_exists_fail():
+#     repo = UserRepositoryTest(deepcopy(start_db))
+#     user = User("User_10", "user_10@mail.com", "password_0")
+#     out = repo.exists(user)
+#     assert out == False
+#     assert len([ u for u in start_db if (user.email == u.email) or (user.username == u.username)]) > 0
+    
+    
     

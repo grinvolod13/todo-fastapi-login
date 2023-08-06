@@ -5,9 +5,12 @@ from core.application import security
 class User():
     username: str
     email: str
-    password: str | bytes
+    password: bytes
     
-    def check_password(self, password: str | bytes) -> bool:
-        return security.check_password(password, self.password)
-    
+    def __init__(self, username: str, email: str, password: str):
+        self.username = username
+        self.email = email
+        self.password = security.generate_password_hash(password)
+
+        
     

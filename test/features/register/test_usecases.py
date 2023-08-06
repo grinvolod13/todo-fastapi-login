@@ -13,7 +13,7 @@ from features.register.domain.usecases import (RegisterUserUseCase)
 def repo():
     start_db = [User(f"User_{i}",
                  f"user_{i}@mail.com",
-                 security.generate_password_hash(f"password_{i}")
+                 f"password_{i}",
                  ) for i in range(10)]
     return UserRepositoryTest(start_db)
 
@@ -27,17 +27,18 @@ def test_register_success(repo):
     assert repo.get("User_New") == user
     
 def test_register_not_unique_username_fail(repo):
-    user = User("User_0","new@mail.com","password_new")
+    user = User("User_0","new@mail.com","password_0")
     result = RegisterUserUseCase(repo).execute(user)
     assert result == False
     assert repo.get("User_0") != user
 
 def test_register_not_unique_email_fail(repo):
-    user = User("User_New","User_0@mail.com","password_new")
+    user = User("User_New","user_0@mail.com","password_0")
     result = RegisterUserUseCase(repo).execute(user)
+    # print(user)
+    # print(repo.get_by_email("User_0@mail.com"))
     assert result == False
-    assert repo.get_by_email("User_0@mail.com") != user
-
+    assert repo.get_by_email("user_0@mail.com") != user
     
     
     

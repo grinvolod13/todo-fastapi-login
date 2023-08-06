@@ -10,5 +10,12 @@ class RegisterUserUseCase(UseCase):
         self.dependency = dependency
         
     def execute(self, user: User) -> bool:
-        ...
+        if self.repo.get(user.username)!=None or self.repo.get_by_email(user.email)!=None:
+            return False # if exists
+        self.repo.add(user)
+        return True
+        
+        
+            
+        
         
