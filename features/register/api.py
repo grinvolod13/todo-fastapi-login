@@ -12,9 +12,9 @@ router = APIRouter()
 
 
 @router.post("/register")
-def register(user: User, db = Depends(dependency.get_db)):
+def register(user: [str, str, str], db = Depends(dependency.get_db)):
     repo = UserRepositorySqlalchemy(db)
-    return RegisterUserUseCase(repo).execute(user)
+    return RegisterUserUseCase(repo).execute(User(user['username'], user['email'], user['password']))
 
 @router.get("/register")
 def list_users(db = Depends(dependency.get_db), user = Depends(login_manager)):

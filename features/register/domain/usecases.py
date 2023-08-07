@@ -1,7 +1,6 @@
 from core.domain import UseCase
 from core.data.repository.user_repository import UserRepositoryAbstract
 from core.domain.model import User
-import bcrypt
 
 
 class RegisterUserUseCase(UseCase):

@@ -1,11 +1,15 @@
 from dataclasses import dataclass
-from core.application import security
 
+from sqlalchemy import Column, String
+from core.application import security
+from core.data.orm import Base
 @dataclass
-class User():
-    username: str
-    email: str
-    password: bytes
+class User(Base):
+    __tablename__ = 'user'
+    
+    username: str = Column(String(20), primary_key=True)
+    email: str = Column(String(50), unique=True)
+    password: bytes = Column(String(60), nullable=False)
     
     def __init__(self, username: str, email: str, password: str):
         self.username = username

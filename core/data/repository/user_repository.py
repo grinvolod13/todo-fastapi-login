@@ -1,4 +1,4 @@
-from copy import copy, deepcopy
+from copy import copy
 
 from sqlalchemy import and_, delete, exists, select, or_
 from core.data import Repository

@@ -3,13 +3,12 @@ from core.domain.model import User
 import pytest
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from core.data.orm import start_mappers, metadata
+from core.data.orm import Base
 
 
 connection_string = "sqlite:///test.db"
-start_mappers()
 test_engine = create_engine(connection_string)
-metadata.create_all(test_engine)
+Base.metadata.create_all(test_engine)
 
 users = [User(f"User_{i}", f"user_{i}@mail.com", f"password_{i}") for i in range(10)]
 
