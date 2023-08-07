@@ -1,11 +1,15 @@
 from sqlalchemy import Column, MetaData, String, Table
-from sqlalchemy.orm import mapper, registry
+from sqlalchemy.orm import mapper, registry, relationship, DeclarativeBase 
 from ..domain import model
 
 
+class Base(DeclarativeBase):
+    ...
 
-metadata = MetaData()
-mapper_registry = registry(metadata=metadata)
+
+mapper_registry = registry(metadata=Base.metadata)
+
+
 
 user = Table(
     'user',
@@ -16,4 +20,11 @@ user = Table(
 )
 
 def start_mappers(): # TODO: add tests
-    user_mapper = mapper_registry.map_imperatively(model.User, user)
+    user_mapper = mapper_registry.map_imperatively(
+        model.User,
+        user,
+        properties={
+            "todos": relationship("todo", back_populates="user")
+            },
+        
+)
